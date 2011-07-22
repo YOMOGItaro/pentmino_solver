@@ -1,0 +1,99 @@
+#ifndef PENTOMINOS_H
+#define PENTOMINOS_H
+
+#include "pentomino.h"
+
+#define PENTOMINO_ROTATION_SET_MAX_SIZE 8
+
+typedef struct{
+  Pentomino ps[PENTOMINO_ROTATION_SET_MAX_SIZE];
+  int len;
+} PentominoRotationSet;
+
+PentominoRotationSet
+prs_init()
+{
+  PentominoRotationSet dst;
+
+  dst.len = 0;
+
+  return dst;
+}
+
+bool_t
+prs_exists_pentomino
+(
+ const PentominoRotationSet src,
+ const Pentomino key
+)
+{
+  int iter;
+  bit_board_t key_bb;
+
+  key_bb = pentomino_to_bb(key);
+
+  for(iter = 0; iter < src.len; iter++){
+    if(bb_is_same(key_bb, pentomino_to_bb(src.ps[iter]))){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+PentominoRotationSet
+prs_add
+(
+ PentominoRotationSet self,
+ Pentomino elem
+ )
+{
+  self.ps[self.len] = elem;
+  self.len++;
+
+  return self;
+}
+
+void
+prs_dump
+(
+ PentominoRotationSet src
+)
+{
+  int iter;
+
+  printf("(PentominoRotationSet ");
+  printf("(len  %d)\n", src.len);
+
+  for(iter = 0; iter < src.len; iter++){
+    pentomino_dump(src.ps[iter]);
+  }
+  printf(")\n");
+}
+
+PentominoRotationSet
+prs_create_rotation
+(
+ Pentomino src
+ )
+{
+  int iter_r1;
+  int iter_r2;
+  PentominoRotationSet dst;
+  
+  dst = prs_init();
+
+  for(iter_r2 = 0; iter_r2 < 2; iter_r2++){
+    for(iter_r1 = 0; iter_r1 < 4; iter_r1++){
+      if(!prs_exists_pentomino(dst, src)){
+	dst = prs_add(dst, src);
+      }
+      src = pentomino_rotate1(src);
+    }
+    src = pentomino_rotate2(src);
+  }
+  
+  return dst;
+}
+
+#endif
