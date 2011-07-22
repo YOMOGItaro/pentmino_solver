@@ -1,7 +1,14 @@
 #ifndef BIT_BOARD_H
 #define BIT_BOARD_H
 
-#include <gmp.h>
+//#include <gmp.h>
+
+/* #define MPZ_LSHIFT(A, B, l)			\ */
+/*   mpz_mul_2exp((A), (B), (l)) */
+
+/* #define MPZ_RSHIFT(x, y)			\ */
+/*   mpz_tdiv_q_2exp((x), (y), (r)) */
+
 
 #include "point2d.h"
 
@@ -12,22 +19,14 @@
 #define BIT_BOARD_TOP_MASK 0x8000000000000000LL
 #define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL
 
-#define MPZ_LSHIFT(A, B, l)\
-  mpz_mul_2exp((A), (B), (l))
 
-#define MPZ_RSHIFT(x, y)			\
-  mpz_tdiv_q_2exp((x), (y), (r))
+typedef unsigned long long bit_board_t;
 
-typedef unsigned long long int bit_board_t;
+
 
 bit_board_t
 bb_init()
-{
-  mpz_t dd;
-  
-  mpz_init(dd);
-  MPZ_LSHIFT(dd, dd, 1);
-
+{  
   return BIT_BOARD_NOSPACE_MASK;
 }
 
