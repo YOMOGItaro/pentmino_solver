@@ -130,9 +130,11 @@ pentomino_to_bb
   int iter;
   bit_board_t dst;
 
-  dst = bb_init();
+  dst = bb_init_zero();
 
   for(iter = 0; iter < PENTOMINO_MAX_SIZE; iter++){
+    /* printf("\niter#%d\n", iter); */
+    /* bb_dump(dst); */
     dst = bb_add_p(dst, src.p[iter]);
   }
 

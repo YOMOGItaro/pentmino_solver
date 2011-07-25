@@ -13,21 +13,79 @@
 #include "point2d.h"
 
 #define BIT_BOARD_WIDTH 10
+#define BIT_BOARD_WIDTH_WITH_GUARD (BIT_BOARD_WIDTH + 1) 
 #define BIT_BOARD_HEIGHT 6
+#define BIT_BOARD_SIZE 2
+#define BIT_BOARD_BITS 64
 
 #define BIT_BOARD_NOSPACE_MASK 0xF000000000000000LL
 #define BIT_BOARD_TOP_MASK 0x8000000000000000LL
-#define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL
+/* #define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL */
 
 
-typedef unsigned long long bit_board_t;
-
+typedef struct{
+  unsigned long long board[BIT_BOARD_SIZE];
+}bit_board_t;
 
 
 bit_board_t
-bb_init()
+bb_init_zero()
 {  
-  return BIT_BOARD_NOSPACE_MASK;
+  bit_board_t dst;
+
+  dst.board[0] = 0x0;
+  dst.board[1] = 0x0;
+
+  return dst;
+}
+
+bit_board_t
+bb_bottom()
+{
+  bit_board_t dst;
+  
+  dst.board[1] = 0x00;
+  dst.board[0] = 0x01;
+
+  return dst;
+}
+
+bit_board_t
+bb_top()
+{
+  bit_board_t dst;
+  
+  dst.board[1] = 0x8000000000000000LL;
+  dst.board[0] = 0x00;
+
+  return dst;
+}
+
+
+bit_board_t
+bb_or
+(
+ bit_board_t lhs,
+ bit_board_t rhs
+)
+{
+  lhs.board[0] |= rhs.board[0];
+  lhs.board[1] |= rhs.board[1];
+
+  return lhs;
+}
+
+bit_board_t
+bb_and
+(
+ bit_board_t lhs,
+ bit_board_t rhs
+)
+{
+  lhs.board[0] &= rhs.board[0];
+  lhs.board[1] &= rhs.board[1];
+
+  return lhs;
 }
 
 bool_t
@@ -37,7 +95,7 @@ bb_is_same
  bit_board_t rhs
  )
 {
-  return lhs == rhs;
+  return (lhs.board[0] == rhs.board[0]) && (lhs.board[1] == rhs.board[1]);
 }
 
 bool_t
@@ -47,7 +105,7 @@ bb_exist
  bit_board_t key
  )
 {
-  return (src & key) == key;
+  return bb_is_same(bb_and(src, key), key);
 }
 
 bool_t
@@ -56,7 +114,7 @@ bb_exist_bottom
  bit_board_t src
  )
 {
-  return bb_exist(src, BIT_BOARD_BOTTOM_MASK);
+  return bb_exist(src, bb_bottom());
 }
 
 bool_t
@@ -65,7 +123,112 @@ bb_exist_top
  bit_board_t src
  )
 {
-  return bb_exist(src, BIT_BOARD_TOP_MASK);
+  return bb_exist(src, bb_top());
+}
+
+bit_board_t
+bb_lshift
+(
+ bit_board_t src,
+ int count
+)
+{
+  int iter;
+
+  for(iter = 0; iter < count; iter++){
+    src.board[1] <<= 1;
+    src.board[1] |= (src.board[0] >> (BIT_BOARD_BITS - 1));
+    src.board[0] <<= 1;
+  }
+
+  return src;
+}
+
+bit_board_t
+bb_rshift
+(
+ bit_board_t src,
+ int count
+ )
+{
+  int iter;
+
+  for(iter = 0; iter < count; iter++){
+    src.board[0] >>= 1;
+    src.board[0] |= (src.board[1] << (BIT_BOARD_BITS - 1));
+    src.board[1] >>= 1;
+  }
+
+  return src;
+}
+
+/** 
+ * 
+ * src must be not 0
+ * 
+ * @return 
+ */
+bit_board_t
+bb_rshift_boundary
+(
+ bit_board_t src
+)
+{  
+  while(!bb_exist_bottom(src)){
+    src = bb_rshift(src, 1);
+  }
+
+  return src;
+}
+
+/** 
+ * 128 - (10 * (6 + 1))
+ * = 128 - 70 = 58
+ * 58 / 4 = 14 ...2
+ * @param src 
+ * 
+ * @return 
+ */
+bit_board_t
+bb_set_limit
+(
+ bit_board_t src
+ )
+{
+  src.board[0] |= 0x0000000000000000LL;  
+  src.board[1] |= 0xFFFFFFFFFFFFFFFCLL;
+
+  return src;
+}
+
+bit_board_t
+bb_set_separator
+(
+ bit_board_t src
+)
+{
+  int iter;
+  bit_board_t separator;
+
+  separator = bb_init_zero();
+  for(iter = 0; iter < BIT_BOARD_HEIGHT; iter++){
+    separator = bb_lshift(separator, BIT_BOARD_WIDTH_WITH_GUARD);
+    separator.board[0] |= (0x0000000000000001LL << BIT_BOARD_WIDTH);
+  }
+
+  return bb_or(src, separator);
+}
+
+bit_board_t
+bb_init_board()
+{
+  bit_board_t dst;
+
+  dst = bb_init_zero();
+  dst = bb_set_limit(dst);
+  dst = bb_set_separator(dst);
+
+  return dst;
 }
 
 bit_board_t
@@ -75,7 +238,7 @@ bb_add
  location_t location
  )
 {
-  return src | (0x00000001 << location);
+  return bb_or(src, bb_lshift(bb_bottom(), location));
 }
 
 bit_board_t
@@ -85,7 +248,7 @@ bb_add_p
  Point2d p
 )
 {
-  return bb_add(src, p.x + p.y * BIT_BOARD_WIDTH);
+  return bb_add(src, p.x + p.y * (BIT_BOARD_WIDTH_WITH_GUARD));
 }
 
 void
@@ -106,8 +269,8 @@ bb_dump
     if((iter+1)%8 == 0){
       printf("|");
     }
-
-    src <<= 1;
+    //printf("\n<%lld %lld>\n", src.board[1], src.board[0]);
+    src = bb_lshift(src, 1);
   }
 
   printf("\n");
@@ -123,13 +286,13 @@ bb_disp
   int iter_h;
 
   for(iter_h = 0; iter_h < BIT_BOARD_HEIGHT; iter_h++){
-    for (iter_v = 0; iter_v < BIT_BOARD_WIDTH; iter_v++){
+    for (iter_v = 0; iter_v < BIT_BOARD_WIDTH_WITH_GUARD; iter_v++){
       if(bb_exist_bottom(src)){
 	printf("☗");
       }else{
 	printf("☖");
       }
-      src >>= 1;
+      src = bb_rshift(src, 1);
     }
     printf("\n");
   }

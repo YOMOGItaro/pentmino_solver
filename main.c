@@ -7,10 +7,21 @@ int main()
 {
   Pentomino p;
   PentominoRotationSet prs;
+  bit_board_t bb;
 
-  p = pentomino_create_i();
-  prs = prs_create_rotation(p);
-  prs_dump(prs);
+  bb = bb_init_board();
+  bb_dump(bb);
+
+  p = pentomino_create_x();
+  bb = pentomino_to_bb(p);
+  bb = bb_rshift_boundary(bb);
+  //bb = bb_rshift_boundary(bb);
+  bb = bb_init_board();
+  bb_dump(bb);
+  bb_disp(bb);
+
+  /* prs = prs_create_rotation(p); */
+  /* prs_dump(prs); */
 
   //pentomino_all_lotate(p);
 
