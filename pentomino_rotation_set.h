@@ -2,12 +2,14 @@
 #define PENTOMINOS_H
 
 #include "pentomino.h"
+#include "bit_board.h"
 
 #define PENTOMINO_ROTATION_SET_MAX_SIZE 8
 
 typedef struct{
-  Pentomino ps[PENTOMINO_ROTATION_SET_MAX_SIZE];
+  bit_board_t ps[PENTOMINO_ROTATION_SET_MAX_SIZE];
   int len;
+  char type;
 } PentominoRotationSet;
 
 PentominoRotationSet
@@ -16,6 +18,7 @@ prs_init()
   PentominoRotationSet dst;
 
   dst.len = 0;
+  dst.type = ' ';
 
   return dst;
 }
@@ -33,7 +36,7 @@ prs_exists_pentomino
   key_bb = pentomino_to_bb(key);
 
   for(iter = 0; iter < src.len; iter++){
-    if(bb_is_same(key_bb, pentomino_to_bb(src.ps[iter]))){
+    if(bb_is_same(key_bb, src.ps[iter])){
       return TRUE;
     }
   }
@@ -48,7 +51,7 @@ prs_add
  Pentomino elem
  )
 {
-  self.ps[self.len] = elem;
+  self.ps[self.len] = pentomino_to_bb(elem);
   self.len++;
 
   return self;
@@ -63,18 +66,34 @@ prs_dump
   int iter;
 
   printf("(PentominoRotationSet ");
-  printf("(len  %d)\n", src.len);
+  printf("(len  %d) ", src.len);
+  printf("(type  %c)\n", src.type);
 
   for(iter = 0; iter < src.len; iter++){
-    pentomino_dump(src.ps[iter]);
+    bb_dump(src.ps[iter]);
   }
   printf(")\n");
+}
+
+void
+prs_disp
+(
+ PentominoRotationSet src
+)
+{
+  int iter;
+
+  for(iter = 0; iter < src.len; iter++){
+    bb_disp(src.ps[iter]);
+    printf("\n");
+  }
 }
 
 PentominoRotationSet
 prs_create_rotation
 (
- Pentomino src
+ Pentomino src,
+ char type
  )
 {
   int iter_r1;
@@ -92,6 +111,8 @@ prs_create_rotation
     }
     src = pentomino_rotate2(src);
   }
+
+  dst.type = type;
   
   return dst;
 }

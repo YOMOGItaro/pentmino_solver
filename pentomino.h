@@ -133,12 +133,10 @@ pentomino_to_bb
   dst = bb_init_zero();
 
   for(iter = 0; iter < PENTOMINO_MAX_SIZE; iter++){
-    /* printf("\niter#%d\n", iter); */
-    /* bb_dump(dst); */
     dst = bb_add_p(dst, src.p[iter]);
   }
 
-  return dst;
+  return bb_rshift_boundary(dst);
 }
 
 
