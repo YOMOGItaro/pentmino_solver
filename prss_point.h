@@ -91,5 +91,23 @@ pp_dump
   printf("(rnum %d) ", src.rotation_num);
 }
 
+#include "used_pentomino.h"
+PrssPoint
+pp_init_skip_used_pentomino
+(
+ UsedPentomino up
+ )
+{
+  PrssPoint dst;
+
+  dst.pentomino_num = 0;
+  dst.rotation_num = 0;
+
+  while(up_is_used_pentomino(up, dst.pentomino_num)){
+    dst.pentomino_num ++;
+  }
+  
+  return dst;
+}
 
 #endif /* _PRSS_POINT_H_ */

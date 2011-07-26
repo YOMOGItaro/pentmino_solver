@@ -88,7 +88,7 @@ solver_next
 )
 {
   src.used = up_add(src.used, pp_get_type(src.working));
-  src.working = pp_next(src.working, prss);
+  src.working = pp_next(src.working, prss, src.used);
 
   return src;
 }

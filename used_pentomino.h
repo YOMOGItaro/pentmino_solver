@@ -1,6 +1,7 @@
 #ifndef _USED_PENTOMINO_H_
 #define _USED_PENTOMINO_H_
 
+#include "pentomino_rotation_set_set.h"
 
 typedef struct{
   bool_t used[PENTOMINO_ROTATION_SET_SET_MAX_SIZE];
@@ -32,7 +33,7 @@ up_add
 }
 
 bool_t
-up_is_used
+up_is_used_pentomino
 (
  UsedPentomino src,
  int idx

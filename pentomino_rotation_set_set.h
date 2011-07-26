@@ -1,10 +1,10 @@
 #ifndef _PENTOMINO_ROTATION_SET_SET_H_
 #define _PENTOMINO_ROTATION_SET_SET_H_
 
+#define PENTOMINO_ROTATION_SET_SET_MAX_SIZE 12
+
 #include "pentomino_rotation_set.h"
 #include "prss_point.h"
-
-#define PENTOMINO_ROTATION_SET_SET_MAX_SIZE 12
 
 typedef struct{
   PentominoRotationSet pss[PENTOMINO_ROTATION_SET_SET_MAX_SIZE];
@@ -99,12 +99,15 @@ prss_dump
   }
 }
 
+
+#include "used_pentomino.h"
 // PrssPoint functions
 PrssPoint
 pp_next
 (
  PrssPoint src,
- const PentominoRotationSetSet * const prss
+ const PentominoRotationSetSet * const prss,
+ UsedPentomino up
 )
 {
   if(
@@ -116,7 +119,9 @@ pp_next
       return src;
     }
   else if((src.pentomino_num + 1) < prss_get_len(prss)){
-    src.pentomino_num ++;
+    while(up_is_used_pentomino(up, src.pentomino_num)){
+      src.pentomino_num ++;
+    }
     src.rotation_num = 0;
 
     return src;
