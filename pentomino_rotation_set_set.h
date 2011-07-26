@@ -2,6 +2,7 @@
 #define _PENTOMINO_ROTATION_SET_SET_H_
 
 #include "pentomino_rotation_set.h"
+#include "prss_point.h"
 
 #define PENTOMINO_ROTATION_SET_SET_MAX_SIZE 12
 
@@ -19,6 +20,35 @@ prss_init()
   dst.len = 0;
 
   return dst;
+}
+
+bit_board_t
+prss_get
+(
+ PentominoRotationSetSet src,
+ PrssPoint key
+ )
+{
+  return src.pss[pp_get_type(key)].ps[pp_get_rot(key)];
+}
+
+int
+prss_get_len
+(
+ PentominoRotationSetSet src
+)
+{
+  return src.len;
+}
+
+int
+prss_get_rot_len
+(
+ PentominoRotationSetSet src,
+ int key
+ )
+{
+  return prs_get_len(src.pss[key]);
 }
 
 PentominoRotationSetSet
@@ -68,6 +98,34 @@ prss_dump
     prs_dump(src.pss[iter]);
   }
 }
+
+// PrssPoint functions
+PrssPoint
+pp_next
+(
+ PrssPoint src,
+ PentominoRotationSetSet prss
+)
+{
+  if(
+     (src.rotation_num + 1)
+     < prss_get_rot_len(prss, src.pentomino_num))
+    {
+      src.rotation_num ++;
+
+      return src;
+    }
+  else if((src.pentomino_num + 1) < prss_get_len(prss)){
+    src.pentomino_num ++;
+    src.rotation_num = 0;
+
+    return src;
+  }else{
+    return pp_init_last();
+  }
+
+}
+
 
 
 #endif /* _PENTOMINO_ROTATION_SET_SET_H_ */

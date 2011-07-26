@@ -10,6 +10,8 @@ typedef struct{
   bit_board_t ps[PENTOMINO_ROTATION_SET_MAX_SIZE];
   int len;
   char type;
+
+  
 } PentominoRotationSet;
 
 PentominoRotationSet
@@ -21,6 +23,15 @@ prs_init()
   dst.type = ' ';
 
   return dst;
+}
+
+int
+prs_get_len
+(
+ PentominoRotationSet src
+)
+{
+  return src.len;
 }
 
 bool_t

@@ -20,6 +20,7 @@
 
 #define BIT_BOARD_NOSPACE_MASK 0xF000000000000000LL
 #define BIT_BOARD_TOP_MASK 0x8000000000000000LL
+#define BIT_BOARD_FILLED_MASK 0xFFFFFFFFFFFFFFFFLL
 /* #define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL */
 
 
@@ -126,6 +127,20 @@ bb_exist_top
   return bb_exist(src, bb_top());
 }
 
+bool_t
+bb_is_all_filled
+(
+ bit_board_t src
+ )
+{
+  bit_board_t filled;
+
+  filled.board[0] = BIT_BOARD_FILLED_MASK;
+  filled.board[1] = BIT_BOARD_FILLED_MASK;
+
+  return bb_is_same(src, filled);
+}
+
 bit_board_t
 bb_lshift
 (
@@ -178,6 +193,23 @@ bb_rshift_boundary
     src = bb_rshift(src, 1);
   }
 
+  return src;
+}
+
+bit_board_t
+bb_rshift_delete_1
+(
+ bit_board_t src
+ )
+{
+  if(bb_is_all_filled(src)){
+    return src;
+  }
+
+  while(bb_exist_bottom(src)){
+    src = bb_rshift(src, 1);
+  }
+  
   return src;
 }
 
