@@ -85,12 +85,13 @@ solve_in
  const PentominoRotationSetSet * const prss
  )
 {
-  /* printf("solve_in\n"); */
-  /* printf("halfway : \n"); */
-  /* bb_dump(src.halfway); */
-  /* printf("key : \n"); */
-  /* bb_dump(prss_get(prss, src.working)); */
-  
+  printf("solve_in\n");
+  printf("halfway : \n");
+  bb_dump(src.halfway);
+  printf("key : \n");
+  bb_dump(prss_get(prss, src.working));
+  getchar();
+ 
   if(solver_is_solved(src)){
     printf("solved\n");
     getchar();
