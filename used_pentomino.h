@@ -42,6 +42,20 @@ up_is_used_pentomino
   return src.used[idx] == TRUE;
 }
 
+void
+up_dump
+(
+ UsedPentomino src
+ )
+{
+  int iter;
+
+  printf("(used_pentomino ");
+  for(iter = 0; iter < PENTOMINO_ROTATION_SET_SET_MAX_SIZE; iter ++){
+    printf("%d ",src.used[iter]);
+  }
+  printf(")\n");
+}
 #endif /* _USED_PENTOMINO_H_ */
 
 

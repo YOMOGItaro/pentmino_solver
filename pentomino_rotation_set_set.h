@@ -116,13 +116,18 @@ pp_next
     {
       src.rotation_num ++;
 
+      printf("(1)");
+      
       return src;
     }
   else if((src.pentomino_num + 1) < prss_get_len(prss)){
+    src.pentomino_num ++;
     while(up_is_used_pentomino(up, src.pentomino_num)){
       src.pentomino_num ++;
     }
     src.rotation_num = 0;
+
+    printf("(2)");
 
     return src;
   }else{

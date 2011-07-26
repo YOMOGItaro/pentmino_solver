@@ -5,6 +5,8 @@
 #include "used_pentomino.h"
 #include "prss_point.h"
 
+// 6 x 4 => 2339
+
 int g_solved_count;
 
 typedef struct {
@@ -35,6 +37,7 @@ solver_dump
 {
   pp_dump(src.working);
   printf("\n");
+  up_dump(src.used);
   bb_dump(src.halfway);
 }
 
@@ -73,9 +76,10 @@ solver_put
  bit_board_t key
 )
 {
+  src.used = up_add(src.used, pp_get_type(src.working));
   src.halfway = bb_or(src.halfway, key);
   src.halfway = bb_rshift_delete_1(src.halfway);
-  src.working = pp_init_top();
+  src.working = pp_init_skip_used_pentomino(src.used);
   
   return src;
 }
@@ -87,7 +91,6 @@ solver_next
  const PentominoRotationSetSet * const prss
 )
 {
-  src.used = up_add(src.used, pp_get_type(src.working));
   src.working = pp_next(src.working, prss, src.used);
 
   return src;
@@ -99,7 +102,9 @@ solve_in
  Solver src,
  const PentominoRotationSetSet * const prss
  )
-{ 
+{  
+  solver_dump(src);
+ 
   if(solver_is_solved(src)){
     g_solved_count++;
     printf("solved : %d\n", g_solved_count);
@@ -107,14 +112,14 @@ solve_in
   }
 
   if(solver_is_last(src)){
-    //printf("last\n");
+    printf("last\n");
     return;
   }else if(solver_can_put(src, prss_get(prss, src.working))){
-    //printf("put\n");
+    printf("put\n");
     solve_in(solver_put(src, prss_get(prss, src.working)), prss);
   }
 
-  //printf("next\n");
+  printf("next\n");
   solve_in(solver_next(src, prss), prss);
 }
 

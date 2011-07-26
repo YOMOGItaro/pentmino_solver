@@ -87,8 +87,8 @@ pp_dump
  PrssPoint src
  )
 {
-  printf("(pnum %d) ", src.pentomino_num);
-  printf("(rnum %d) ", src.rotation_num);
+  printf("(pnum %02d) ", src.pentomino_num);
+  printf("(rnum %02d) ", src.rotation_num);
 }
 
 #include "used_pentomino.h"

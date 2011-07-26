@@ -12,8 +12,10 @@ int main()
   PentominoRotationSetSet prss;
 
   prss = prss_all_rotate_set();
-
+  //printf("%d\n", prss_get_len(&prss));
+  //prss_disp(prss);
   solve(prss);
 
+  //bb_disp(bb_init_board());
   return 0;
 }
