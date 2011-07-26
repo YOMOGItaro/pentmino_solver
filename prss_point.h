@@ -81,5 +81,15 @@ pp_get_rot
   return src.rotation_num;
 }
 
+void
+pp_dump
+(
+ PrssPoint src
+ )
+{
+  printf("(pnum %d) ", src.pentomino_num);
+  printf("(rnum %d) ", src.rotation_num);
+}
+
 
 #endif /* _PRSS_POINT_H_ */

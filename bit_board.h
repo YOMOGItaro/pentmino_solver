@@ -109,7 +109,7 @@ bb_exist
  bit_board_t key
  )
 {
-  return bb_is_same(bb_and(src, key), bb_init_zero());
+  return !bb_is_same(bb_and(src, key), bb_init_zero());
 }
 
 bool_t
