@@ -28,6 +28,9 @@ typedef struct{
   unsigned long long board[BIT_BOARD_SIZE];
 }bit_board_t;
 
+void bb_dump(bit_board_t);
+
+
 
 bit_board_t
 bb_init_zero()
@@ -106,7 +109,7 @@ bb_exist
  bit_board_t key
  )
 {
-  return bb_is_same(bb_and(src, key), key);
+  return bb_is_same(bb_and(src, key), bb_init_zero());
 }
 
 bool_t
@@ -208,6 +211,7 @@ bb_rshift_delete_1
 
   while(bb_exist_bottom(src)){
     src = bb_rshift(src, 1);
+    src = bb_or(src, bb_top());
   }
   
   return src;
@@ -292,7 +296,8 @@ bb_dump
   size_t iter;
 
   for(iter = 0; iter < sizeof(bit_board_t)*8; iter++){
-    if(bb_exist_top(src)){
+    //if(bb_exist_top(src)){
+    if((src.board[1] & 0x8000000000000000LL) == 0x8000000000000000LL){
       printf("1");
     }else{
       printf("0");

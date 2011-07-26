@@ -25,30 +25,30 @@ prss_init()
 bit_board_t
 prss_get
 (
- PentominoRotationSetSet src,
+ const PentominoRotationSetSet * const src,
  PrssPoint key
  )
 {
-  return src.pss[pp_get_type(key)].ps[pp_get_rot(key)];
+  return src->pss[pp_get_type(key)].ps[pp_get_rot(key)];
 }
 
 int
 prss_get_len
 (
- PentominoRotationSetSet src
+ const PentominoRotationSetSet * const src
 )
 {
-  return src.len;
+  return src->len;
 }
 
 int
 prss_get_rot_len
 (
- PentominoRotationSetSet src,
+ const PentominoRotationSetSet * const src,
  int key
  )
 {
-  return prs_get_len(src.pss[key]);
+  return prs_get_len(src->pss[key]);
 }
 
 PentominoRotationSetSet
@@ -104,7 +104,7 @@ PrssPoint
 pp_next
 (
  PrssPoint src,
- PentominoRotationSetSet prss
+ const PentominoRotationSetSet * const prss
 )
 {
   if(

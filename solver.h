@@ -69,7 +69,7 @@ Solver
 solver_next
 (
  Solver src,
- PentominoRotationSetSet prss
+ const PentominoRotationSetSet * const prss
 )
 {
   src.used = up_add(src.used, pp_get_type(src.working));
@@ -82,7 +82,7 @@ void
 solve_in
 (
  Solver src,
- PentominoRotationSetSet prss
+ const PentominoRotationSetSet * const prss
  )
 {
   /* printf("solve_in\n"); */
@@ -93,6 +93,7 @@ solve_in
   
   if(solver_is_solved(src)){
     printf("solved\n");
+    getchar();
     return;
   }
 
@@ -116,7 +117,7 @@ solve
  PentominoRotationSetSet src
  )
 {
-  solve_in(solver_init(), src);
+  solve_in(solver_init(), &src);
 }
 
 
