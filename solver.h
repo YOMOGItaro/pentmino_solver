@@ -81,48 +81,68 @@ solver_put
   return src;
 }
 
-Solver
+void
 solver_next
 (
- Solver src,
+ Solver * const src,
  const PentominoRotationSetSet * const prss
 )
 {
-  src.working = pp_next(src.working, prss, &src.used);
-
-  return src;
+  pp_next(&(src->working), prss, &(src->used));
 }
 
 void
 solve_in
 (
- Solver src,
+ Solver * src,
+ const PentominoRotationSetSet * const prss
+ );
+
+void
+solve_put
+(
+ Solver * src,
+ const PentominoRotationSetSet * const prss
+ )
+{
+  Solver new;
+
+  new  = solver_put(*src, prss_get(prss, src->working));
+  solve_in(&new, prss);
+}
+  
+
+void
+solve_in
+(
+ Solver * src,
  const PentominoRotationSetSet * const prss
  )
 {  
   //solver_dump(src);
-  if(g_solved_count > 99){
-    return;
-  }
+  /* if(g_solved_count > 99){ */
+  /*   return; */
+  /* } */
   
   //solver_dump(src);
 
-  if(solver_is_solved(src)){
+  if(solver_is_solved(*src)){
     g_solved_count++;
     printf("solved : %d\n", g_solved_count);
     return;
   }
 
-  if(solver_is_last(src)){
+  if(solver_is_last(*src)){
     //printf("last\n");
     return;
-  }else if(solver_can_put(src, prss_get(prss, src.working))){
+  }else if(solver_can_put(*src, prss_get(prss, src->working))){
     //printf("put\n");
-    solve_in(solver_put(src, prss_get(prss, src.working)), prss);
+    solve_put(src, prss);
   }
 
   //printf("next\n");
-  solve_in(solver_next(src, prss), prss);
+  solver_next(src, prss);
+  solve_in(src, prss);
 }
 
 void
@@ -131,7 +151,10 @@ solve
  PentominoRotationSetSet src
  )
 {
-  solve_in(solver_init(), &src);
+  Solver solver;
+
+  solver = solver_init();
+  solve_in(&solver, &src);
 }
 
 

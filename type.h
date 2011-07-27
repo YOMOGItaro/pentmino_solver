@@ -27,7 +27,7 @@ typedef char * const string_t;
 
 #define TRUE 1
 #define FALSE 0
-typedef int bool_t;
+typedef char bool_t;
 
 
 #endif
