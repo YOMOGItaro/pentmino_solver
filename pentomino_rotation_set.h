@@ -9,9 +9,7 @@
 typedef struct{
   bit_board_t ps[PENTOMINO_ROTATION_SET_MAX_SIZE];
   int len;
-  char type;
-
-  
+  char type;  
 } PentominoRotationSet;
 
 PentominoRotationSet
@@ -25,14 +23,22 @@ prs_init()
   return dst;
 }
 
-int
-prs_get_len
-(
- PentominoRotationSet src
-)
-{
-  return src.len;
-}
+/* bit_board_t */
+/* prs_get */
+/* ( */
+/*  PentominoRotationSet src, */
+/*  int key */
+/*  ) */
+#define prs_get(src, key)			\
+  ((src).ps[(key)])
+
+/* int */
+/* prs_get_len */
+/* ( */
+/*  PentominoRotationSet src */
+/* ) */
+#define prs_get_len(src)			\
+  ((src).len)
 
 bool_t
 prs_exists_pentomino
@@ -99,6 +105,25 @@ prs_disp
     printf("\n");
   }
 }
+
+PentominoRotationSet
+prs_create_rotation_only90
+(
+ Pentomino src,
+ char type
+ )
+{
+  PentominoRotationSet dst;
+  
+  dst = prs_init();
+  dst = prs_add(dst, src);
+  dst = prs_add(dst, pentomino_rotate1(src));
+
+  dst.type = type;
+
+  return dst;
+}
+
 
 PentominoRotationSet
 prs_create_rotation

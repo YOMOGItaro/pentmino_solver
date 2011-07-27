@@ -44,6 +44,17 @@ bb_init_zero()
 }
 
 bit_board_t
+bb_init_filled()
+{
+  bit_board_t dst;
+
+  dst.board[0] = BIT_BOARD_FILLED_MASK;
+  dst.board[1] = BIT_BOARD_FILLED_MASK;
+
+  return dst;
+}
+
+bit_board_t
 bb_bottom()
 {
   bit_board_t dst;
@@ -64,7 +75,6 @@ bb_top()
 
   return dst;
 }
-
 
 bit_board_t
 bb_or
@@ -92,57 +102,49 @@ bb_and
   return lhs;
 }
 
-bool_t
-bb_is_same
-(
- bit_board_t lhs,
- bit_board_t rhs
- )
-{
-  return (lhs.board[0] == rhs.board[0]) && (lhs.board[1] == rhs.board[1]);
-}
+/* bool_t */
+/* bb_exist */
+/* ( */
+/*  bit_board_t lhs, */
+/*  bit_board_t rhs */
+/*  ) */
+#define bb_is_same(lhs, rhs)			\
+  (((lhs).board[0] == (rhs).board[0])		\
+   && ((lhs).board[1] == (rhs).board[1]))
 
-bool_t
-bb_exist
-(
- bit_board_t src,
- bit_board_t key
- )
-{
-  return !bb_is_same(bb_and(src, key), bb_init_zero());
-}
+/* bool_t */
+/* bb_exist */
+/* ( */
+/*  bit_board_t src, */
+/*  bit_board_t key */
+/*  ) */
+#define bb_exist(src, key)			\
+  (!bb_is_same(bb_and((src), (key)), bb_init_zero()))
 
-bool_t
-bb_exist_bottom
-(
- bit_board_t src
- )
-{
-  return bb_exist(src, bb_bottom());
-}
+/* bool_t */
+/* bb_exist_bottom */
+/* ( */
+/*  bit_board_t src */
+/*  ) */
+#define bb_exist_bottom(src)			\
+  (bb_exist((src), bb_bottom()))
 
-bool_t
-bb_exist_top
-(
- bit_board_t src
- )
-{
-  return bb_exist(src, bb_top());
-}
 
-bool_t
-bb_is_all_filled
-(
- bit_board_t src
- )
-{
-  bit_board_t filled;
+/* bool_t */
+/* bb_exist_top */
+/* ( */
+/*  bit_board_t src */
+/*  ) */
+#define bb_exist_top(src)			\
+  (bb_exist((src), bb_top()))
 
-  filled.board[0] = BIT_BOARD_FILLED_MASK;
-  filled.board[1] = BIT_BOARD_FILLED_MASK;
-
-  return bb_is_same(src, filled);
-}
+/* bool_t */
+/* bb_is_all_filled */
+/* ( */
+/*  bit_board_t src */
+/*  ) */
+#define bb_is_all_filled(src)			\
+  (bb_is_same((src), bb_init_filled()))
 
 bit_board_t
 bb_lshift

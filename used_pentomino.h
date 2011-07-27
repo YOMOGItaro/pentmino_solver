@@ -39,8 +39,11 @@ up_is_used_pentomino
  int idx
  )
 {
+  //if(idx >= PENTOMINO_ROTATION_SET_SET_MAX_SIZE){printf("%d",idx);getchar();}
   return src.used[idx] == TRUE;
 }
+/* #define up_is_used_pentomino(src, idx)		\ */
+/*   ((src).used[(idx)] == TRUE) */
 
 void
 up_dump

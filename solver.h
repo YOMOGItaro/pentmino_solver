@@ -6,7 +6,7 @@
 #include "prss_point.h"
 
 // 6 x 4 => 2339
-
+//          9356
 int g_solved_count;
 
 typedef struct {
@@ -41,33 +41,30 @@ solver_dump
   bb_dump(src.halfway);
 }
 
-bool_t
-solver_is_solved
-(
- Solver src
-)
-{
-  return bb_is_all_filled(src.halfway);
-}
+/* bool_t */
+/* solver_is_solved */
+/* ( */
+/*  Solver src */
+/* ) */
+#define solver_is_solved(src)			\
+  (bb_is_all_filled((src).halfway))
 
-bool_t
-solver_is_last
-(
- Solver src
-)
-{
-  return pp_is_last(src.working);
-}
+/* bool_t */
+/* solver_is_last */
+/* ( */
+/*  Solver src */
+/* ) */
+#define solver_is_last(src)			\
+  (pp_is_last((src).working))
 
-bool_t
-solver_can_put
-(
- Solver src,
- bit_board_t key
- )
-{
-  return !bb_exist(src.halfway, key);
-}
+/* bool_t */
+/* solver_can_put */
+/* ( */
+/*  Solver src, */
+/*  bit_board_t key */
+/*  ) */
+#define solver_can_put(src, key)		\
+  (!bb_exist((src).halfway, (key)))
 
 Solver
 solver_put
@@ -103,8 +100,13 @@ solve_in
  const PentominoRotationSetSet * const prss
  )
 {  
-  solver_dump(src);
- 
+  //solver_dump(src);
+  /* if(g_solved_count > 99){ */
+  /*   return; */
+  /* } */
+  
+  //solver_dump(src);
+
   if(solver_is_solved(src)){
     g_solved_count++;
     printf("solved : %d\n", g_solved_count);
@@ -112,14 +114,14 @@ solve_in
   }
 
   if(solver_is_last(src)){
-    printf("last\n");
+    //printf("last\n");
     return;
   }else if(solver_can_put(src, prss_get(prss, src.working))){
-    printf("put\n");
+    //printf("put\n");
     solve_in(solver_put(src, prss_get(prss, src.working)), prss);
   }
 
-  printf("next\n");
+  //printf("next\n");
   solve_in(solver_next(src, prss), prss);
 }
 

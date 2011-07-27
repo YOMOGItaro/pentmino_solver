@@ -1,7 +1,7 @@
 project(pentomino)
 
 add_definitions(
-  -g -O0 -Wall -W -Wshadow -Wpointer-arith -Wcast-qual -Winline
+  -pg -O0 -Wall -W -Wshadow -Wpointer-arith -Wcast-qual -Winline
   )
 
 add_executable(

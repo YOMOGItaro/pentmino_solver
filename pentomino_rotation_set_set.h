@@ -22,34 +22,32 @@ prss_init()
   return dst;
 }
 
-bit_board_t
-prss_get
-(
- const PentominoRotationSetSet * const src,
- PrssPoint key
- )
-{
-  return src->pss[pp_get_type(key)].ps[pp_get_rot(key)];
-}
+/* bit_board_t */
+/* prss_get */
+/* ( */
+/*  const PentominoRotationSetSet * const src, */
+/*  PrssPoint key */
+/*  ) */
+#define prss_get(src, key)				\
+  (prs_get((src)->pss[pp_get_type(key)], pp_get_rot(key)))
 
-int
-prss_get_len
-(
- const PentominoRotationSetSet * const src
-)
-{
-  return src->len;
-}
+/* int */
+/* prss_get_len */
+/* ( */
+/*  const PentominoRotationSetSet * const src */
+/* ) */
+#define prss_get_len(src)			\
+  ((src)->len)
 
-int
-prss_get_rot_len
-(
- const PentominoRotationSetSet * const src,
- int key
- )
-{
-  return prs_get_len(src->pss[key]);
-}
+
+/* int */
+/* prss_get_rot_len */
+/* ( */
+/*  const PentominoRotationSetSet * const src, */
+/*  int key */
+/*  ) */
+#define prss_get_rot_len(src, key)		\
+  (prs_get_len((src)->pss[(key)]))
 
 PentominoRotationSetSet
 prss_add
@@ -69,11 +67,12 @@ prss_all_rotate_set()
 {
   PentominoRotationSetSet dst;
 
-  dst = prss_init();
+  dst = prss_init();  
+  //one prs is only rotate 90 degree.
+  dst = prss_add(dst, prs_create_rotation_only90(pentomino_create_n(), 'n'));
   dst = prss_add(dst, prs_create_rotation(pentomino_create_f(), 'f'));
   dst = prss_add(dst, prs_create_rotation(pentomino_create_i(), 'i'));
   dst = prss_add(dst, prs_create_rotation(pentomino_create_l(), 'l'));
-  dst = prss_add(dst, prs_create_rotation(pentomino_create_n(), 'n'));
   dst = prss_add(dst, prs_create_rotation(pentomino_create_p(), 'p'));
   dst = prss_add(dst, prs_create_rotation(pentomino_create_t(), 't'));
   dst = prss_add(dst, prs_create_rotation(pentomino_create_u(), 'u'));
@@ -116,19 +115,15 @@ pp_next
     {
       src.rotation_num ++;
 
-      printf("(1)");
-      
       return src;
     }
   else if((src.pentomino_num + 1) < prss_get_len(prss)){
-    src.pentomino_num ++;
-    while(up_is_used_pentomino(up, src.pentomino_num)){
-      src.pentomino_num ++;
-    }
     src.rotation_num = 0;
 
-    printf("(2)");
-
+    src.pentomino_num ++;
+    src = pp_skip(src, up);
+    
+    
     return src;
   }else{
     return pp_init_last();
