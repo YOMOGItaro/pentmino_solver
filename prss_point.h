@@ -83,10 +83,11 @@ PrssPoint
 pp_skip
 (
  PrssPoint src,
- UsedPentomino up
+ const UsedPentomino * const up
 )
 {
-  while(up_is_used_pentomino(up, src.pentomino_num)){
+  src.rotation_num = 0;
+  while(up_is_used_pentomino(*up, src.pentomino_num)){
     src.pentomino_num ++;
     if(src.pentomino_num >= PENTOMINO_ROTATION_SET_SET_MAX_SIZE){
       src = pp_init_last();
@@ -100,7 +101,7 @@ pp_skip
 PrssPoint
 pp_init_skip_used_pentomino
 (
- UsedPentomino up
+ const UsedPentomino * const up
  )
 {
   PrssPoint dst;

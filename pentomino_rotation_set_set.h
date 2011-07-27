@@ -106,7 +106,7 @@ pp_next
 (
  PrssPoint src,
  const PentominoRotationSetSet * const prss,
- UsedPentomino up
+ const UsedPentomino * const up
 )
 {
   if(
@@ -118,11 +118,8 @@ pp_next
       return src;
     }
   else if((src.pentomino_num + 1) < prss_get_len(prss)){
-    src.rotation_num = 0;
-
     src.pentomino_num ++;
     src = pp_skip(src, up);
-    
     
     return src;
   }else{

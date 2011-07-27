@@ -50,7 +50,7 @@ bb_init_filled()
 
   dst.board[0] = BIT_BOARD_FILLED_MASK;
   dst.board[1] = BIT_BOARD_FILLED_MASK;
-
+  
   return dst;
 }
 

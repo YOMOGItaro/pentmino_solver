@@ -76,7 +76,7 @@ solver_put
   src.used = up_add(src.used, pp_get_type(src.working));
   src.halfway = bb_or(src.halfway, key);
   src.halfway = bb_rshift_delete_1(src.halfway);
-  src.working = pp_init_skip_used_pentomino(src.used);
+  src.working = pp_init_skip_used_pentomino(&src.used);
   
   return src;
 }
@@ -88,7 +88,7 @@ solver_next
  const PentominoRotationSetSet * const prss
 )
 {
-  src.working = pp_next(src.working, prss, src.used);
+  src.working = pp_next(src.working, prss, &src.used);
 
   return src;
 }
@@ -101,9 +101,9 @@ solve_in
  )
 {  
   //solver_dump(src);
-  /* if(g_solved_count > 99){ */
-  /*   return; */
-  /* } */
+  if(g_solved_count > 99){
+    return;
+  }
   
   //solver_dump(src);
 
