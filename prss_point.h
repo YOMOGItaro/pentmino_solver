@@ -24,15 +24,36 @@ pp_init
   return dst;
 }
 
+static PrssPoint g_pp_immediate_last;
+void
+pp_init_last_env()
+{
+  g_pp_immediate_last = pp_init(-1, -1);
+}
+
+static PrssPoint g_pp_immediate_top;
+void
+pp_init_top_env()
+{
+  g_pp_immediate_top = pp_init(0, 0);
+}
+
+void
+pp_init_env()
+{
+  pp_init_last_env();
+  pp_init_top_env();
+}
+
 /* PrssPoint */
 /* pp_init_last() */
 #define pp_init_last()				\
-  (pp_init(-1, -1))
+  (g_pp_immediate_last)
 
 /* PrssPoint */
 /* pp_init_top() */
 #define pp_init_top()				\
-  (pp_init(0, 0))
+  (g_pp_immediate_top)
 
 /* bool_t */
 /* pp_is_same */

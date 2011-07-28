@@ -33,36 +33,36 @@ typedef struct{
 
 void bb_dump(bit_board_t);
 
-static bit_board_t g_immediate_zero;
+static bit_board_t g_bb_immediate_zero;
 void
 bb_init_zero_env()
 {  
-  g_immediate_zero.board[0] = BIT_BOARD_ZERO_MASK;
-  g_immediate_zero.board[1] = BIT_BOARD_ZERO_MASK;
+  g_bb_immediate_zero.board[0] = BIT_BOARD_ZERO_MASK;
+  g_bb_immediate_zero.board[1] = BIT_BOARD_ZERO_MASK;
 }
 
-static bit_board_t g_immediate_filled;
+static bit_board_t g_bb_immediate_filled;
 void
 bb_init_filled_env()
 {
-  g_immediate_filled.board[0] = BIT_BOARD_FILLED_MASK;
-  g_immediate_filled.board[1] = BIT_BOARD_FILLED_MASK;
+  g_bb_immediate_filled.board[0] = BIT_BOARD_FILLED_MASK;
+  g_bb_immediate_filled.board[1] = BIT_BOARD_FILLED_MASK;
 }
 
-static bit_board_t g_immediate_bottom;
+static bit_board_t g_bb_immediate_bottom;
 void
 bb_init_bottom_env()
 {
-  g_immediate_bottom.board[1] = BIT_BOARD_ZERO_MASK;
-  g_immediate_bottom.board[0] = BIT_BOARD_BOTTOM_MASK;
+  g_bb_immediate_bottom.board[1] = BIT_BOARD_ZERO_MASK;
+  g_bb_immediate_bottom.board[0] = BIT_BOARD_BOTTOM_MASK;
 }
 
-static bit_board_t g_immediate_top;
+static bit_board_t g_bb_immediate_top;
 void
 bb_init_top_env()
 {
-  g_immediate_top.board[1] = BIT_BOARD_TOP_MASK;
-  g_immediate_top.board[0] = BIT_BOARD_ZERO_MASK;
+  g_bb_immediate_top.board[1] = BIT_BOARD_TOP_MASK;
+  g_bb_immediate_top.board[0] = BIT_BOARD_ZERO_MASK;
 }
 
 void
@@ -75,16 +75,16 @@ bb_init_env()
 }
 
 #define bb_init_zero()				\
-  (g_immediate_zero)
+  (g_bb_immediate_zero)
 
 #define bb_init_filled()			\
-  (g_immediate_filled)
+  (g_bb_immediate_filled)
 
 #define bb_init_top()				\
-  (g_immediate_top)
+  (g_bb_immediate_top)
 
 #define bb_init_bottom()			\
-  (g_immediate_bottom)
+  (g_bb_immediate_bottom)
 
 
 #define bb_eq_or(dst, lhs, rhs)			\
