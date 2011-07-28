@@ -120,9 +120,9 @@ solve_in
  )
 {  
   //solver_dump(src);
-  /* if(g_solved_count > 99){ */
-  /*   return; */
-  /* } */
+  if(g_solved_count > 99){
+    return;
+  }
   
   //solver_dump(src);
 

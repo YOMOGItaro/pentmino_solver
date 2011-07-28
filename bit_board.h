@@ -22,7 +22,9 @@
 #define BIT_BOARD_TOP_MASK 0x8000000000000000LL
 #define BIT_BOARD_FILLED_MASK 0xFFFFFFFFFFFFFFFFLL
 #define BIT_BOARD_ZERO_MASK 0x0000000000000000LL
-/* #define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL */
+#define BIT_BOARD_LIMIT0_MASK 0x0000000000000000LL
+#define BIT_BOARD_LIMIT1_MASK 0xFFFFFFFFFFFFFFFCLL
+#define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL
 
 
 typedef struct{
@@ -31,51 +33,59 @@ typedef struct{
 
 void bb_dump(bit_board_t);
 
-
-
-bit_board_t
-bb_init_zero()
+static bit_board_t g_immediate_zero;
+void
+bb_init_zero_env()
 {  
-  bit_board_t dst;
-
-  dst.board[0] = 0x0;
-  dst.board[1] = 0x0;
-
-  return dst;
+  g_immediate_zero.board[0] = BIT_BOARD_ZERO_MASK;
+  g_immediate_zero.board[1] = BIT_BOARD_ZERO_MASK;
 }
 
-bit_board_t
-bb_init_filled()
+static bit_board_t g_immediate_filled;
+void
+bb_init_filled_env()
 {
-  bit_board_t dst;
-
-  dst.board[0] = BIT_BOARD_FILLED_MASK;
-  dst.board[1] = BIT_BOARD_FILLED_MASK;
-  
-  return dst;
+  g_immediate_filled.board[0] = BIT_BOARD_FILLED_MASK;
+  g_immediate_filled.board[1] = BIT_BOARD_FILLED_MASK;
 }
 
-bit_board_t
-bb_bottom()
+static bit_board_t g_immediate_bottom;
+void
+bb_init_bottom_env()
 {
-  bit_board_t dst;
-  
-  dst.board[1] = 0x00;
-  dst.board[0] = 0x01;
-
-  return dst;
+  g_immediate_bottom.board[1] = BIT_BOARD_ZERO_MASK;
+  g_immediate_bottom.board[0] = BIT_BOARD_BOTTOM_MASK;
 }
 
-bit_board_t
-bb_top()
+static bit_board_t g_immediate_top;
+void
+bb_init_top_env()
 {
-  bit_board_t dst;
-  
-  dst.board[1] = 0x8000000000000000LL;
-  dst.board[0] = 0x00;
-
-  return dst;
+  g_immediate_top.board[1] = BIT_BOARD_TOP_MASK;
+  g_immediate_top.board[0] = BIT_BOARD_ZERO_MASK;
 }
+
+void
+bb_init_env()
+{
+  bb_init_zero_env();
+  bb_init_filled_env();
+  bb_init_top_env();
+  bb_init_bottom_env();
+}
+
+#define bb_init_zero()				\
+  (g_immediate_zero)
+
+#define bb_init_filled()			\
+  (g_immediate_filled)
+
+#define bb_init_top()				\
+  (g_immediate_top)
+
+#define bb_init_bottom()			\
+  (g_immediate_bottom)
+
 
 #define bb_eq_or(dst, lhs, rhs)			\
   do{						\
@@ -140,7 +150,7 @@ bb_and
 /*  bit_board_t src */
 /*  ) */
 #define bb_exist_bottom(src)			\
-  (bb_exist((src), bb_bottom()))
+  (bb_exist((src), bb_init_bottom()))
 
 
 /* bool_t */
@@ -149,7 +159,7 @@ bb_and
 /*  bit_board_t src */
 /*  ) */
 #define bb_exist_top(src)			\
-  (bb_exist((src), bb_top()))
+  (bb_exist((src), bb_init_top()))
 
 /* bool_t */
 /* bb_is_all_filled */
@@ -226,7 +236,7 @@ bb_rshift_delete_1
 
   while(bb_exist_bottom(src)){
     src = bb_rshift(src, 1);
-    bb_eq_or(src, src, bb_top());
+    bb_eq_or(src, src, bb_init_top());
   }
   
   return src;
@@ -246,8 +256,8 @@ bb_set_limit
  bit_board_t src
  )
 {
-  src.board[0] |= 0x0000000000000000LL;  
-  src.board[1] |= 0xFFFFFFFFFFFFFFFCLL;
+  src.board[0] |= BIT_BOARD_LIMIT0_MASK;  
+  src.board[1] |= BIT_BOARD_LIMIT1_MASK;
 
   return src;
 }
@@ -264,7 +274,7 @@ bb_set_separator
   separator = bb_init_zero();
   for(iter = 0; iter < BIT_BOARD_HEIGHT; iter++){
     separator = bb_lshift(separator, BIT_BOARD_WIDTH_WITH_GUARD);
-    separator.board[0] |= (0x0000000000000001LL << BIT_BOARD_WIDTH);
+    separator.board[0] |= (BIT_BOARD_BOTTOM_MASK << BIT_BOARD_WIDTH);
   }
 
   bb_eq_or(src, src, separator);
@@ -291,7 +301,7 @@ bb_add
  location_t location
  )
 {
-  bb_eq_or(src, src, bb_lshift(bb_bottom(), location));
+  bb_eq_or(src, src, bb_lshift(bb_init_bottom(), location));
   return src;
 }
 
@@ -315,7 +325,7 @@ bb_dump
 
   for(iter = 0; iter < sizeof(bit_board_t)*8; iter++){
     //if(bb_exist_top(src)){
-    if((src.board[1] & 0x8000000000000000LL) == 0x8000000000000000LL){
+    if((src.board[1] & BIT_BOARD_TOP_MASK) == BIT_BOARD_TOP_MASK){
       printf("1");
     }else{
       printf("0");
