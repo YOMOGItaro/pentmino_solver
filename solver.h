@@ -81,15 +81,19 @@ solver_put
   return src;
 }
 
-void
-solver_next
-(
- Solver * const src,
- const PentominoRotationSetSet * const prss
-)
-{
-  pp_next(&(src->working), prss, &(src->used));
-}
+/* void */
+/* solver_next */
+/* ( */
+/*  Solver * const src, */
+/*  const PentominoRotationSetSet * const prss */
+/* ) */
+/* { */
+/*   pp_next(&(src->working), prss, &(src->used)); */
+/* } */
+#define solver_next(src, prss)				\
+  do{							\
+    pp_next(&((src)->working), (prss), &((src)->used));	\
+  }while(0)
 
 void
 solve_in
