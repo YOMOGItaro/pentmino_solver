@@ -100,22 +100,23 @@ pp_dump
 }
 
 #include "used_pentomino.h"
-void
-pp_skip
-(
- PrssPoint * const src,
- const UsedPentomino * const up
-)
-{
-  src->rotation_num = 0;
-  while(up_is_used_pentomino(*up, src->pentomino_num)){
-    src->pentomino_num ++;
-    if(src->pentomino_num >= PENTOMINO_ROTATION_SET_SET_MAX_SIZE){
-      *src = pp_init_last();
-      break;
-    }
-  }
-}
+/* void */
+/* pp_skip */
+/* ( */
+/*  PrssPoint * const src, */
+/*  const UsedPentomino * const up */
+/* ) */
+#define pp_skip(src, up)			\
+  do{									\
+    (src)->rotation_num = 0;						\
+    while(up_is_used_pentomino(*(up), (src)->pentomino_num)){		\
+      (src)->pentomino_num ++;						\
+      if((src)->pentomino_num >= PENTOMINO_ROTATION_SET_SET_MAX_SIZE){	\
+	*(src) = pp_init_last();					\
+      break;								\
+    }									\
+  }						\
+}while(0)
 
 PrssPoint
 pp_init_skip_used_pentomino
