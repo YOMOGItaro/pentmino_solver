@@ -93,6 +93,13 @@ bb_init_env()
     (dst).board[1] = (lhs).board[1] | (rhs).board[1];	\
   }while(0)
 
+#define bb_or_eq(lhs, rhs)			\
+  do{						\
+    (lhs).board[0] |= (rhs).board[0];	\
+    (lhs).board[1] |= (rhs).board[1];	\
+  }while(0)
+
+
 bit_board_t
 bb_or
 (
@@ -236,7 +243,7 @@ bb_rshift_delete_1
 
   while(bb_exist_bottom(src)){
     src = bb_rshift(src, 1);
-    bb_eq_or(src, src, bb_init_top());
+    bb_or_eq(src, bb_init_top());
   }
   
   return src;
@@ -277,7 +284,7 @@ bb_set_separator
     separator.board[0] |= (BIT_BOARD_BOTTOM_MASK << BIT_BOARD_WIDTH);
   }
 
-  bb_eq_or(src, src, separator);
+  bb_or_eq(src, separator);
 
   return src;
 }
@@ -301,7 +308,7 @@ bb_add
  location_t location
  )
 {
-  bb_eq_or(src, src, bb_lshift(bb_init_bottom(), location));
+  bb_or_eq(src, bb_lshift(bb_init_bottom(), location));
   return src;
 }
 
