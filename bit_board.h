@@ -21,6 +21,7 @@
 #define BIT_BOARD_NOSPACE_MASK 0xF000000000000000LL
 #define BIT_BOARD_TOP_MASK 0x8000000000000000LL
 #define BIT_BOARD_FILLED_MASK 0xFFFFFFFFFFFFFFFFLL
+#define BIT_BOARD_ZERO_MASK 0x0000000000000000LL
 /* #define BIT_BOARD_BOTTOM_MASK 0x0000000000000001LL */
 
 
@@ -112,14 +113,20 @@ bb_and
   (((lhs).board[0] == (rhs).board[0])		\
    && ((lhs).board[1] == (rhs).board[1]))
 
+#define bb_is_anded_zero(src, key)		\
+  ((((src).board[0] & (key).board[0]) == BIT_BOARD_ZERO_MASK)	\
+   && (((src).board[1] & (key).board[1]) == BIT_BOARD_ZERO_MASK))
+
 /* bool_t */
 /* bb_exist */
 /* ( */
 /*  bit_board_t src, */
 /*  bit_board_t key */
 /*  ) */
+//  (!bb_is_same(bb_and((src), (key)), bb_init_zero()))
+
 #define bb_exist(src, key)			\
-  (!bb_is_same(bb_and((src), (key)), bb_init_zero()))
+  (!bb_is_anded_zero(src, key))
 
 /* bool_t */
 /* bb_exist_bottom */
