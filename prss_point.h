@@ -24,14 +24,14 @@ pp_init
   return dst;
 }
 
-static PrssPoint g_pp_immediate_last;
+PrssPoint g_pp_immediate_last;
 void
 pp_init_last_env()
 {
   g_pp_immediate_last = pp_init(-1, -1);
 }
 
-static PrssPoint g_pp_immediate_top;
+PrssPoint g_pp_immediate_top;
 void
 pp_init_top_env()
 {

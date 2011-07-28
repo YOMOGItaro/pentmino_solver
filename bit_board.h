@@ -33,7 +33,7 @@ typedef struct{
 
 void bb_dump(bit_board_t);
 
-static bit_board_t g_bb_immediate_zero;
+bit_board_t g_bb_immediate_zero;
 void
 bb_init_zero_env()
 {  
@@ -41,7 +41,7 @@ bb_init_zero_env()
   g_bb_immediate_zero.board[1] = BIT_BOARD_ZERO_MASK;
 }
 
-static bit_board_t g_bb_immediate_filled;
+bit_board_t g_bb_immediate_filled;
 void
 bb_init_filled_env()
 {
@@ -49,7 +49,7 @@ bb_init_filled_env()
   g_bb_immediate_filled.board[1] = BIT_BOARD_FILLED_MASK;
 }
 
-static bit_board_t g_bb_immediate_bottom;
+bit_board_t g_bb_immediate_bottom;
 void
 bb_init_bottom_env()
 {
@@ -57,7 +57,7 @@ bb_init_bottom_env()
   g_bb_immediate_bottom.board[0] = BIT_BOARD_BOTTOM_MASK;
 }
 
-static bit_board_t g_bb_immediate_top;
+bit_board_t g_bb_immediate_top;
 void
 bb_init_top_env()
 {
@@ -194,23 +194,30 @@ bb_lshift
   return src;
 }
 
-bit_board_t
-bb_rshift
-(
- bit_board_t src,
- int count
- )
-{
-  int iter;
+/* bit_board_t */
+/* bb_rshift */
+/* ( */
+/*  bit_board_t src, */
+/*  int count */
+/*  ) */
+/* { */
+/*   int iter; */
 
-  for(iter = 0; iter < count; iter++){
-    src.board[0] >>= 1;
-    src.board[0] |= (src.board[1] << (BIT_BOARD_BITS - 1));
-    src.board[1] >>= 1;
-  }
+/*   for(iter = 0; iter < count; iter++){ */
+/*     src.board[0] >>= 1; */
+/*     src.board[0] |= (src.board[1] << (BIT_BOARD_BITS - 1)); */
+/*     src.board[1] >>= 1; */
+/*   } */
 
-  return src;
-}
+/*   return src; */
+/* } */
+int g_bb_iter;
+#define bb_rshift_eq(src, count)		\
+  for(g_bb_iter = 0; g_bb_iter < (count); g_bb_iter++){			\
+    (src).board[0] >>= 1;						\
+    (src).board[0] |= ((src).board[1] << (BIT_BOARD_BITS - 1));		\
+    (src).board[1] >>= 1;						\
+  }								
 
 /** 
  * 
@@ -225,29 +232,38 @@ bb_rshift_boundary
 )
 {  
   while(!bb_exist_bottom(src)){
-    src = bb_rshift(src, 1);
+   bb_rshift_eq(src, 1);
   }
 
   return src;
 }
 
-bit_board_t
-bb_rshift_delete_1
-(
- bit_board_t src
- )
-{
-  if(bb_is_all_filled(src)){
-    return src;
-  }
+/* bit_board_t */
+/* bb_rshift_delete_1 */
+/* ( */
+/*  bit_board_t src */
+/*  ) */
+/* { */
+/*   if(bb_is_all_filled(src)){ */
+/*     return src; */
+/*   } */
 
-  while(bb_exist_bottom(src)){
-    src = bb_rshift(src, 1);
-    bb_or_eq(src, bb_init_top());
-  }
+/*   while(bb_exist_bottom(src)){ */
+/*     bb_rshift_eq(src, 1); */
+/*     bb_or_eq(src, bb_init_top()); */
+/*   } */
   
-  return src;
-}
+/*   return src; */
+/* } */
+#define bb_rshift_delete_1_eq(src)		\
+  do{						\
+    if(!bb_is_all_filled(src)){			\
+	while(bb_exist_bottom(src)){		\
+	  bb_rshift_eq((src), 1);		\
+	  bb_or_eq((src), bb_init_top());	\
+	}					\
+      }						\
+  }while(0)					\
 
 /** 
  * 128 - (10 * (6 + 1))
@@ -364,7 +380,7 @@ bb_disp
       }else{
 	printf("☖");
       }
-      src = bb_rshift(src, 1);
+      bb_rshift_eq(src, 1);
     }
     printf("\n");
   }

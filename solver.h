@@ -75,7 +75,7 @@ solver_put
 {
   src.used = up_add(src.used, pp_get_type(src.working));
   bb_or_eq(src.halfway, key);
-  src.halfway = bb_rshift_delete_1(src.halfway);
+  bb_rshift_delete_1_eq(src.halfway);
   src.working = pp_init_skip_used_pentomino(&src.used);
   
   return src;
@@ -120,9 +120,9 @@ solve_in
  )
 {  
   //solver_dump(src);
-  if(g_solved_count > 99){
-    return;
-  }
+  /* if(g_solved_count > 99){ */
+  /*   return; */
+  /* } */
   
   //solver_dump(src);
 
