@@ -101,33 +101,28 @@ prss_dump
 
 #include "used_pentomino.h"
 // PrssPoint functions
-void
-pp_next
-(
- PrssPoint * src,
- const PentominoRotationSetSet * const prss,
- const UsedPentomino * const up
-)
-{
-  if(
-     (src->rotation_num + 1)
-     < prss_get_rot_len(prss, src->pentomino_num))
-    {
-      src->rotation_num ++;
-
-      return;
-    }
-  else if((src->pentomino_num + 1) < prss_get_len(prss)){
-    src->pentomino_num ++;
-    pp_skip(src, up);
-    
-    return ;
-  }else{
-    *src = pp_init_last();
-    return ;
-  }
-
-}
+/* void */
+/* pp_next */
+/* ( */
+/*  PrssPoint * src, */
+/*  const PentominoRotationSetSet * const prss, */
+/*  const UsedPentomino * const up */
+/* ) */
+#define pp_next(src, prss, up)			\
+  do{								\
+  if(								\
+     ((src)->rotation_num + 1)					\
+     < prss_get_rot_len((prss), (src)->pentomino_num))		\
+    {								\
+      (src)->rotation_num ++;					\
+    }								\
+  else if(((src)->pentomino_num + 1) < prss_get_len(prss)){	\
+    (src)->pentomino_num ++;					\
+    pp_skip((src), (up));					\
+  }else{							\
+    *(src) = pp_init_last();					\
+  }								\
+}while(0)
 
 
 
