@@ -74,7 +74,7 @@ solver_put
 )
 {
   src.used = up_add(src.used, pp_get_type(src.working));
-  src.halfway = bb_or(src.halfway, key);
+  bb_eq_or(src.halfway, src.halfway, key);
   src.halfway = bb_rshift_delete_1(src.halfway);
   src.working = pp_init_skip_used_pentomino(&src.used);
   
