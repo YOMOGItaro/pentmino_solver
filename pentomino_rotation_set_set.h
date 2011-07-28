@@ -119,7 +119,7 @@ pp_next
     }
   else if((src->pentomino_num + 1) < prss_get_len(prss)){
     src->pentomino_num ++;
-    *src = pp_skip(*src, up);
+    pp_skip(src, up);
     
     return ;
   }else{
