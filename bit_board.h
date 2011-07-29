@@ -204,29 +204,22 @@ bb_lshift
   return src;
 }
 
+#define bb_rshift_one_eq(src)			\
+  do{						\
+    (src).board[0] >>= 1;						\
+    (src).board[0] |= ((src).board[1] << (BIT_BOARD_TOP_BIT_NUMBER));	\
+    (src).board[1] >>= 1;						\
+  }while(0)
 /* bit_board_t */
 /* bb_rshift */
 /* ( */
 /*  bit_board_t src, */
 /*  int count */
 /*  ) */
-/* { */
-/*   int iter; */
-
-/*   for(iter = 0; iter < count; iter++){ */
-/*     src.board[0] >>= 1; */
-/*     src.board[0] |= (src.board[1] << (BIT_BOARD_BITS - 1)); */
-/*     src.board[1] >>= 1; */
-/*   } */
-
-/*   return src; */
-/* } */
 int g_bb_iter;
 #define bb_rshift_eq(src, count)		\
-  for(g_bb_iter = 0; g_bb_iter < (count); g_bb_iter++){			\
-    (src).board[0] >>= 1;						\
-    (src).board[0] |= ((src).board[1] << (BIT_BOARD_TOP_BIT_NUMBER));		\
-    (src).board[1] >>= 1;						\
+  for(g_bb_iter = 0; g_bb_iter < (count); g_bb_iter++){	\
+    bb_rshift_one_eq(src);				\
   }								
 
 /** 
@@ -242,7 +235,7 @@ bb_rshift_boundary
 )
 {  
   while(!bb_exist_bottom(src)){
-   bb_rshift_eq(src, 1);
+   bb_rshift_one_eq(src);
   }
 
   return src;
@@ -257,7 +250,7 @@ bb_rshift_boundary
   do{						\
     if(!bb_is_all_filled(src)){			\
 	while(bb_exist_bottom(src)){		\
-	  bb_rshift_eq((src), 1);		\
+	  bb_rshift_one_eq((src));		\
 	  bb_data_or_eq((src), BIT_BOARD_ZERO_MASK, BIT_BOARD_TOP_MASK);	\
 	}					\
       }						\
@@ -379,7 +372,7 @@ bb_disp
       }else{
 	printf("☖");
       }
-      bb_rshift_eq(src, 1);
+      bb_rshift_one_eq(src);
     }
     printf("\n");
   }
