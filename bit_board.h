@@ -100,31 +100,31 @@ bb_init_env()
   }while(0)
 
 
-bit_board_t
-bb_or
-(
- bit_board_t lhs,
- bit_board_t rhs
-)
-{
-  lhs.board[0] |= rhs.board[0];
-  lhs.board[1] |= rhs.board[1];
+/* bit_board_t */
+/* bb_or */
+/* ( */
+/*  bit_board_t lhs, */
+/*  bit_board_t rhs */
+/* ) */
+/* { */
+/*   lhs.board[0] |= rhs.board[0]; */
+/*   lhs.board[1] |= rhs.board[1]; */
 
-  return lhs;
-}
+/*   return lhs; */
+/* } */
 
-bit_board_t
-bb_and
-(
- bit_board_t lhs,
- bit_board_t rhs
-)
-{
-  lhs.board[0] &= rhs.board[0];
-  lhs.board[1] &= rhs.board[1];
+/* bit_board_t */
+/* bb_and */
+/* ( */
+/*  bit_board_t lhs, */
+/*  bit_board_t rhs */
+/* ) */
+/* { */
+/*   lhs.board[0] &= rhs.board[0]; */
+/*   lhs.board[1] &= rhs.board[1]; */
 
-  return lhs;
-}
+/*   return lhs; */
+/* } */
 
 /* bool_t */
 /* bb_exist */
@@ -132,13 +132,20 @@ bb_and
 /*  bit_board_t lhs, */
 /*  bit_board_t rhs */
 /*  ) */
+#define bb_data_is_same(src, key0, key1)	\
+  (((src).board[0] == (key0))			\
+   && ((src).board[1] == (key1)))
+
+
 #define bb_is_same(lhs, rhs)			\
-  (((lhs).board[0] == (rhs).board[0])		\
-   && ((lhs).board[1] == (rhs).board[1]))
+  bb_data_is_same(lhs, (rhs).board[0], (rhs).board[1])
+
+#define bb_data_is_anded_zero(src, key0, key1)			\
+((((src).board[0] & (key0)) == BIT_BOARD_ZERO_MASK)		\
+ && (((src).board[1] & (key1)) == BIT_BOARD_ZERO_MASK))
 
 #define bb_is_anded_zero(src, key)		\
-  ((((src).board[0] & (key).board[0]) == BIT_BOARD_ZERO_MASK)	\
-   && (((src).board[1] & (key).board[1]) == BIT_BOARD_ZERO_MASK))
+  (bb_data_is_anded_zero((src), (key).board[0], (key).board[1]))
 
 /* bool_t */
 /* bb_exist */
@@ -157,8 +164,7 @@ bb_and
 /*  bit_board_t src */
 /*  ) */
 #define bb_exist_bottom(src)			\
-  (bb_exist((src), bb_init_bottom()))
-
+  (!bb_data_is_anded_zero((src), BIT_BOARD_BOTTOM_MASK, BIT_BOARD_ZERO_MASK))
 
 /* bool_t */
 /* bb_exist_top */
@@ -166,7 +172,8 @@ bb_and
 /*  bit_board_t src */
 /*  ) */
 #define bb_exist_top(src)			\
-  (bb_exist((src), bb_init_top()))
+  (!bb_data_is_anded_zero((src), BIT_BOARD_ZERO_MASK, BIT_BOARD_TOP_MASK))
+//(bb_exist((src), bb_init_top()))
 
 /* bool_t */
 /* bb_is_all_filled */
@@ -174,7 +181,7 @@ bb_and
 /*  bit_board_t src */
 /*  ) */
 #define bb_is_all_filled(src)			\
-  (bb_is_same((src), bb_init_filled()))
+  (bb_data_is_same((src), BIT_BOARD_FILLED_MASK, BIT_BOARD_FILLED_MASK))
 
 bit_board_t
 bb_lshift
