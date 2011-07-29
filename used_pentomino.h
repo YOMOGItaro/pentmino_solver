@@ -20,17 +20,16 @@ up_init()
   return dst;
 }
 
-UsedPentomino
-up_add
-(
- UsedPentomino src,
- int idx
- )
-{
-  src.used[idx] = TRUE;
-
-  return src;
-}
+/* UsedPentomino */
+/* up_add */
+/* ( */
+/*  UsedPentomino src, */
+/*  int idx */
+/*  ) */
+#define up_add_eq(src, idx)			\
+  do{						\
+    (src).used[(idx)] = TRUE;			\
+  }while(0)
 
 /* bool_t */
 /* up_is_used_pentomino */

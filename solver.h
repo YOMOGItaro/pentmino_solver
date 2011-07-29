@@ -75,7 +75,7 @@ solver_dump
 #define solver_put_eq(dst, src, key)				\
   do{								\
     (dst) = (src);							\
-    (dst).used = up_add((dst).used, pp_get_type((dst).working));	\
+    up_add_eq((dst).used, pp_get_type((dst).working));	\
     bb_or_eq((dst).halfway, (key));					\
     bb_rshift_delete_1_eq((dst).halfway);				\
     (dst).working = pp_init_skip_used_pentomino(&(dst).used);		\
