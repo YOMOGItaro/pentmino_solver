@@ -17,6 +17,7 @@
 #define BIT_BOARD_HEIGHT 6
 #define BIT_BOARD_SIZE 2
 #define BIT_BOARD_BITS 64
+#define BIT_BOARD_TOP_BIT_NUMBER 63
 
 #define BIT_BOARD_NOSPACE_MASK 0xF000000000000000LL
 #define BIT_BOARD_TOP_MASK 0x8000000000000000LL
@@ -224,7 +225,7 @@ int g_bb_iter;
 #define bb_rshift_eq(src, count)		\
   for(g_bb_iter = 0; g_bb_iter < (count); g_bb_iter++){			\
     (src).board[0] >>= 1;						\
-    (src).board[0] |= ((src).board[1] << (BIT_BOARD_BITS - 1));		\
+    (src).board[0] |= ((src).board[1] << (BIT_BOARD_TOP_BIT_NUMBER));		\
     (src).board[1] >>= 1;						\
   }								
 
