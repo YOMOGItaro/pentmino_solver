@@ -66,20 +66,20 @@ solver_dump
 #define solver_can_put(src, key)		\
   (!bb_exist((src).halfway, (key)))
 
-Solver
-solver_put
-(
- Solver src,
- bit_board_t key
-)
-{
-  src.used = up_add(src.used, pp_get_type(src.working));
-  bb_or_eq(src.halfway, key);
-  bb_rshift_delete_1_eq(src.halfway);
-  src.working = pp_init_skip_used_pentomino(&src.used);
-  
-  return src;
-}
+/* Solver */
+/* solver_put */
+/* ( */
+/*  Solver src, */
+/*  bit_board_t key */
+/* ) */
+#define solver_put_eq(dst, src, key)				\
+  do{								\
+    (dst) = (src);							\
+    (dst).used = up_add((dst).used, pp_get_type((dst).working));	\
+    bb_or_eq((dst).halfway, (key));					\
+    bb_rshift_delete_1_eq((dst).halfway);				\
+    (dst).working = pp_init_skip_used_pentomino(&(dst).used);		\
+  }while(0)
 
 /* void */
 /* solver_next */
@@ -111,7 +111,7 @@ solve_put
 {
   Solver new;
 
-  new  = solver_put(*src, prss_get(prss, src->working));
+  solver_put_eq(new, *src, prss_get(prss, src->working));
   solve_in(&new, prss);
 }
   
@@ -124,9 +124,9 @@ solve_in
  )
 {  
   //solver_dump(src);
-  if(g_solved_count > 99){
-    return;
-  }
+  /* if(g_solved_count > 99){ */
+  /*   return; */
+  /* } */
   
   //solver_dump(src);
 

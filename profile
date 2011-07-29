@@ -3,68 +3,66 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls   s/call   s/call  name    
- 69.07      2.54     2.54  2801311     0.00     0.00  solve_in
- 20.98      3.31     0.77  2801310     0.00     0.00  solver_put
-  4.50      3.47     0.17  2801310     0.00     0.00  pp_init_skip_used_pentomino
-  4.22      3.62     0.15  2801310     0.00     0.00  solve_put
-  0.54      3.65     0.02        1     0.02     3.65  solve
-  0.27      3.65     0.01  2801310     0.00     0.00  up_add
-  0.27      3.67     0.01                             solver_dump
-  0.14      3.67     0.01                             up_dump
-  0.00      3.67     0.00     1456     0.00     0.00  bb_lshift
-  0.00      3.67     0.00     1110     0.00     0.00  location_min
-  0.00      3.67     0.00      726     0.00     0.00  point2d_init
-  0.00      3.67     0.00      725     0.00     0.00  bb_add
-  0.00      3.67     0.00      725     0.00     0.00  bb_add_p
-  0.00      3.67     0.00      555     0.00     0.00  location_negative
-  0.00      3.67     0.00      555     0.00     0.00  point2d_min
-  0.00      3.67     0.00      555     0.00     0.00  point2d_mirror_x
-  0.00      3.67     0.00      555     0.00     0.00  point2d_sub
-  0.00      3.67     0.00      445     0.00     0.00  point2d_rotate1
-  0.00      3.67     0.00      445     0.00     0.00  point2d_swap
-  0.00      3.67     0.00      145     0.00     0.00  bb_rshift_boundary
-  0.00      3.67     0.00      145     0.00     0.00  pentomino_to_bb
-  0.00      3.67     0.00      111     0.00     0.00  pentomino_calc_origin
-  0.00      3.67     0.00      111     0.00     0.00  pentomino_make_regular_format
-  0.00      3.67     0.00      111     0.00     0.00  pentomino_reposition
-  0.00      3.67     0.00      110     0.00     0.00  point2d_rotate2
-  0.00      3.67     0.00       89     0.00     0.00  pentomino_rotate1
-  0.00      3.67     0.00       88     0.00     0.00  prs_exists_pentomino
-  0.00      3.67     0.00       60     0.00     0.00  pentomino_add_at
-  0.00      3.67     0.00       57     0.00     0.00  prs_add
-  0.00      3.67     0.00       22     0.00     0.00  pentomino_rotate2
-  0.00      3.67     0.00       12     0.00     0.00  prs_init
-  0.00      3.67     0.00       12     0.00     0.00  prss_add
-  0.00      3.67     0.00       11     0.00     0.00  prs_create_rotation
-  0.00      3.67     0.00        2     0.00     0.00  pp_init
-  0.00      3.67     0.00        1     0.00     0.00  bb_init_board
-  0.00      3.67     0.00        1     0.00     0.00  bb_init_bottom_env
-  0.00      3.67     0.00        1     0.00     0.00  bb_init_env
-  0.00      3.67     0.00        1     0.00     0.00  bb_init_filled_env
-  0.00      3.67     0.00        1     0.00     0.00  bb_init_top_env
-  0.00      3.67     0.00        1     0.00     0.00  bb_init_zero_env
-  0.00      3.67     0.00        1     0.00     0.00  bb_set_limit
-  0.00      3.67     0.00        1     0.00     0.00  bb_set_separator
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_f
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_i
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_l
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_n
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_p
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_t
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_u
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_v
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_w
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_x
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_y
-  0.00      3.67     0.00        1     0.00     0.00  pentomino_create_z
-  0.00      3.67     0.00        1     0.00     0.00  pp_init_env
-  0.00      3.67     0.00        1     0.00     0.00  pp_init_last_env
-  0.00      3.67     0.00        1     0.00     0.00  pp_init_top_env
-  0.00      3.67     0.00        1     0.00     0.00  prs_create_rotation_only90
-  0.00      3.67     0.00        1     0.00     0.00  prss_all_rotate_set
-  0.00      3.67     0.00        1     0.00     0.00  prss_init
-  0.00      3.67     0.00        1     0.00     0.00  solver_init
-  0.00      3.67     0.00        1     0.00     0.00  up_init
+ 72.27      2.52     2.52  2801311     0.00     0.00  solve_in
+ 22.56      3.30     0.79  2801310     0.00     0.00  solve_put
+  2.59      3.39     0.09  2801310     0.00     0.00  pp_init_skip_used_pentomino
+  1.29      3.44     0.04  2801310     0.00     0.00  up_add
+  1.01      3.47     0.04        1     0.04     3.48  solve
+  0.14      3.48     0.01        1     0.01     0.01  up_init
+  0.14      3.48     0.01                             solver_dump
+  0.00      3.48     0.00     1456     0.00     0.00  bb_lshift
+  0.00      3.48     0.00     1110     0.00     0.00  location_min
+  0.00      3.48     0.00      726     0.00     0.00  point2d_init
+  0.00      3.48     0.00      725     0.00     0.00  bb_add
+  0.00      3.48     0.00      725     0.00     0.00  bb_add_p
+  0.00      3.48     0.00      555     0.00     0.00  location_negative
+  0.00      3.48     0.00      555     0.00     0.00  point2d_min
+  0.00      3.48     0.00      555     0.00     0.00  point2d_mirror_x
+  0.00      3.48     0.00      555     0.00     0.00  point2d_sub
+  0.00      3.48     0.00      445     0.00     0.00  point2d_rotate1
+  0.00      3.48     0.00      445     0.00     0.00  point2d_swap
+  0.00      3.48     0.00      145     0.00     0.00  bb_rshift_boundary
+  0.00      3.48     0.00      145     0.00     0.00  pentomino_to_bb
+  0.00      3.48     0.00      111     0.00     0.00  pentomino_calc_origin
+  0.00      3.48     0.00      111     0.00     0.00  pentomino_make_regular_format
+  0.00      3.48     0.00      111     0.00     0.00  pentomino_reposition
+  0.00      3.48     0.00      110     0.00     0.00  point2d_rotate2
+  0.00      3.48     0.00       89     0.00     0.00  pentomino_rotate1
+  0.00      3.48     0.00       88     0.00     0.00  prs_exists_pentomino
+  0.00      3.48     0.00       60     0.00     0.00  pentomino_add_at
+  0.00      3.48     0.00       57     0.00     0.00  prs_add
+  0.00      3.48     0.00       22     0.00     0.00  pentomino_rotate2
+  0.00      3.48     0.00       12     0.00     0.00  prs_init
+  0.00      3.48     0.00       12     0.00     0.00  prss_add
+  0.00      3.48     0.00       11     0.00     0.00  prs_create_rotation
+  0.00      3.48     0.00        2     0.00     0.00  pp_init
+  0.00      3.48     0.00        1     0.00     0.00  bb_init_board
+  0.00      3.48     0.00        1     0.00     0.00  bb_init_bottom_env
+  0.00      3.48     0.00        1     0.00     0.00  bb_init_env
+  0.00      3.48     0.00        1     0.00     0.00  bb_init_filled_env
+  0.00      3.48     0.00        1     0.00     0.00  bb_init_top_env
+  0.00      3.48     0.00        1     0.00     0.00  bb_init_zero_env
+  0.00      3.48     0.00        1     0.00     0.00  bb_set_limit
+  0.00      3.48     0.00        1     0.00     0.00  bb_set_separator
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_f
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_i
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_l
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_n
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_p
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_t
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_u
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_v
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_w
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_x
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_y
+  0.00      3.48     0.00        1     0.00     0.00  pentomino_create_z
+  0.00      3.48     0.00        1     0.00     0.00  pp_init_env
+  0.00      3.48     0.00        1     0.00     0.00  pp_init_last_env
+  0.00      3.48     0.00        1     0.00     0.00  pp_init_top_env
+  0.00      3.48     0.00        1     0.00     0.00  prs_create_rotation_only90
+  0.00      3.48     0.00        1     0.00     0.00  prss_all_rotate_set
+  0.00      3.48     0.00        1     0.00     0.00  prss_init
+  0.00      3.48     0.00        1     0.00     0.01  solver_init
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -96,53 +94,54 @@ name       the name of the function.  This is the minor sort
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 4 byte(s) for 0.27% of 3.67 seconds
+granularity: each sample hit covers 4 byte(s) for 0.29% of 3.48 seconds
 
 index % time    self  children    called     name
-                0.02    3.63       1/1           main [2]
-[1]     99.6    0.02    3.63       1         solve [1]
-                2.69    0.94       1/1           solve_in <cycle 1> [4]
-                0.00    0.00       1/1           solver_init [63]
+                0.04    3.44       1/1           main [2]
+[1]     99.9    0.04    3.44       1         solve [1]
+                3.30    0.14       1/1           solve_in <cycle 1> [4]
+                0.00    0.01       1/1           solver_init [8]
 -----------------------------------------------
                                                  <spontaneous>
-[2]     99.6    0.00    3.65                 main [2]
-                0.02    3.63       1/1           solve [1]
-                0.00    0.00       1/1           bb_init_env [39]
+[2]     99.9    0.00    3.48                 main [2]
+                0.04    3.44       1/1           solve [1]
                 0.00    0.00       1/1           pp_init_env [57]
+                0.00    0.00       1/1           bb_init_env [39]
                 0.00    0.00       1/1           prss_all_rotate_set [61]
 -----------------------------------------------
-[3]     99.0    2.69    0.94       1+5602620 <cycle 1 as a whole> [3]
-                2.54    0.00 2801311+32478847     solve_in <cycle 1> [4]
-                0.15    0.94 2801310             solve_put <cycle 1> [5]
+[3]     98.7    3.30    0.14       1+5602620 <cycle 1 as a whole> [3]
+                2.52    0.00 2801311+32478847     solve_in <cycle 1> [4]
+                0.79    0.14 2801310             solve_put <cycle 1> [5]
 -----------------------------------------------
                              32478847             solve_in <cycle 1> [4]
                              2801310             solve_put <cycle 1> [5]
-                2.69    0.94       1/1           solve [1]
-[4]     69.1    2.54    0.00 2801311+32478847 solve_in <cycle 1> [4]
+                3.30    0.14       1/1           solve [1]
+[4]     72.3    2.52    0.00 2801311+32478847 solve_in <cycle 1> [4]
                              2801310             solve_put <cycle 1> [5]
                              32478847             solve_in <cycle 1> [4]
 -----------------------------------------------
                              2801310             solve_in <cycle 1> [4]
-[5]     30.0    0.15    0.94 2801310         solve_put <cycle 1> [5]
-                0.77    0.17 2801310/2801310     solver_put [6]
+[5]     26.4    0.79    0.14 2801310         solve_put <cycle 1> [5]
+                0.09    0.00 2801310/2801310     pp_init_skip_used_pentomino [6]
+                0.04    0.00 2801310/2801310     up_add [7]
                              2801310             solve_in <cycle 1> [4]
 -----------------------------------------------
-                0.77    0.17 2801310/2801310     solve_put <cycle 1> [5]
-[6]     25.7    0.77    0.17 2801310         solver_put [6]
-                0.17    0.00 2801310/2801310     pp_init_skip_used_pentomino [7]
-                0.01    0.00 2801310/2801310     up_add [8]
+                0.09    0.00 2801310/2801310     solve_put <cycle 1> [5]
+[6]      2.6    0.09    0.00 2801310         pp_init_skip_used_pentomino [6]
 -----------------------------------------------
-                0.17    0.00 2801310/2801310     solver_put [6]
-[7]      4.5    0.17    0.00 2801310         pp_init_skip_used_pentomino [7]
+                0.04    0.00 2801310/2801310     solve_put <cycle 1> [5]
+[7]      1.3    0.04    0.00 2801310         up_add [7]
 -----------------------------------------------
-                0.01    0.00 2801310/2801310     solver_put [6]
-[8]      0.3    0.01    0.00 2801310         up_add [8]
+                0.00    0.01       1/1           solve [1]
+[8]      0.1    0.00    0.01       1         solver_init [8]
+                0.01    0.00       1/1           up_init [9]
+                0.00    0.00       1/1           bb_init_board [37]
+-----------------------------------------------
+                0.01    0.00       1/1           solver_init [8]
+[9]      0.1    0.01    0.00       1         up_init [9]
 -----------------------------------------------
                                                  <spontaneous>
-[9]      0.3    0.01    0.00                 solver_dump [9]
------------------------------------------------
-                                                 <spontaneous>
-[10]     0.1    0.01    0.00                 up_dump [10]
+[10]     0.1    0.01    0.00                 solver_dump [10]
 -----------------------------------------------
                 0.00    0.00       6/1456        bb_set_separator [44]
                 0.00    0.00    1450/1456        bb_add [14]
@@ -280,7 +279,7 @@ index % time    self  children    called     name
                 0.00    0.00       1/2           pp_init_top_env [59]
 [36]     0.0    0.00    0.00       2         pp_init [36]
 -----------------------------------------------
-                0.00    0.00       1/1           solver_init [63]
+                0.00    0.00       1/1           solver_init [8]
 [37]     0.0    0.00    0.00       1         bb_init_board [37]
                 0.00    0.00       1/1           bb_set_limit [43]
                 0.00    0.00       1/1           bb_set_separator [44]
@@ -412,14 +411,6 @@ index % time    self  children    called     name
                 0.00    0.00       1/1           prss_all_rotate_set [61]
 [62]     0.0    0.00    0.00       1         prss_init [62]
 -----------------------------------------------
-                0.00    0.00       1/1           solve [1]
-[63]     0.0    0.00    0.00       1         solver_init [63]
-                0.00    0.00       1/1           up_init [64]
-                0.00    0.00       1/1           bb_init_board [37]
------------------------------------------------
-                0.00    0.00       1/1           solver_init [63]
-[64]     0.0    0.00    0.00       1         up_init [64]
------------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
  the total amount of time spent in each function and its children.
@@ -507,7 +498,7 @@ index % time    self  children    called     name
 Index by function name
 
   [14] bb_add                 [50] pentomino_create_t     [58] pp_init_last_env
-  [15] bb_add_p               [51] pentomino_create_u      [7] pp_init_skip_used_pentomino
+  [15] bb_add_p               [51] pentomino_create_u      [6] pp_init_skip_used_pentomino
   [37] bb_init_board          [52] pentomino_create_v     [59] pp_init_top_env
   [38] bb_init_bottom_env     [53] pentomino_create_w     [31] prs_add
   [39] bb_init_env            [54] pentomino_create_x     [35] prs_create_rotation
@@ -520,10 +511,10 @@ Index by function name
   [44] bb_set_separator       [23] pentomino_to_bb         [1] solve
   [12] location_min           [13] point2d_init            [4] solve_in
   [16] location_negative      [17] point2d_min             [5] solve_put
-  [30] pentomino_add_at       [18] point2d_mirror_x        [9] solver_dump
-  [24] pentomino_calc_origin  [20] point2d_rotate1        [63] solver_init
-  [45] pentomino_create_f     [27] point2d_rotate2         [6] solver_put
-  [46] pentomino_create_i     [19] point2d_sub             [8] up_add
-  [47] pentomino_create_l     [21] point2d_swap           [10] up_dump
-  [48] pentomino_create_n     [36] pp_init                [64] up_init
-  [49] pentomino_create_p     [57] pp_init_env             [3] <cycle 1>
+  [30] pentomino_add_at       [18] point2d_mirror_x       [10] solver_dump
+  [24] pentomino_calc_origin  [20] point2d_rotate1         [8] solver_init
+  [45] pentomino_create_f     [27] point2d_rotate2         [7] up_add
+  [46] pentomino_create_i     [19] point2d_sub             [9] up_init
+  [47] pentomino_create_l     [21] point2d_swap            [3] <cycle 1>
+  [48] pentomino_create_n     [36] pp_init
+  [49] pentomino_create_p     [57] pp_init_env
