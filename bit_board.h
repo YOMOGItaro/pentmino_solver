@@ -93,12 +93,14 @@ bb_init_env()
     (dst).board[1] = (lhs).board[1] | (rhs).board[1];	\
   }while(0)
 
-#define bb_or_eq(lhs, rhs)			\
+#define bb_data_or_eq(src, key0, key1)		\
   do{						\
-    (lhs).board[0] |= (rhs).board[0];	\
-    (lhs).board[1] |= (rhs).board[1];	\
+    (src).board[0] |= (key0);			\
+    (src).board[1] |= (key1);			\
   }while(0)
 
+#define bb_or_eq(lhs, rhs)			\
+  bb_data_or_eq((lhs), (rhs).board[0], (rhs).board[1])
 
 /* bit_board_t */
 /* bb_or */
@@ -250,24 +252,12 @@ bb_rshift_boundary
 /* ( */
 /*  bit_board_t src */
 /*  ) */
-/* { */
-/*   if(bb_is_all_filled(src)){ */
-/*     return src; */
-/*   } */
-
-/*   while(bb_exist_bottom(src)){ */
-/*     bb_rshift_eq(src, 1); */
-/*     bb_or_eq(src, bb_init_top()); */
-/*   } */
-  
-/*   return src; */
-/* } */
 #define bb_rshift_delete_1_eq(src)		\
   do{						\
     if(!bb_is_all_filled(src)){			\
 	while(bb_exist_bottom(src)){		\
 	  bb_rshift_eq((src), 1);		\
-	  bb_or_eq((src), bb_init_top());	\
+	  bb_data_or_eq((src), BIT_BOARD_ZERO_MASK, BIT_BOARD_TOP_MASK);	\
 	}					\
       }						\
   }while(0)					\
@@ -332,6 +322,7 @@ bb_add
  )
 {
   bb_or_eq(src, bb_lshift(bb_init_bottom(), location));
+  
   return src;
 }
 
